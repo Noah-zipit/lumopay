@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity — LumoPay</title>
+<meta name="description" content="LumoPay activity. Fictional wallet, sample data only.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="dash.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="tbrand" href="dashboard.html" aria-label="LumoPay dashboard">
+      <svg width="30" height="23" viewBox="0 0 34 26" aria-hidden="true"><circle cx="12" cy="13" r="10" fill="#ffffff"/><circle cx="23" cy="13" r="10" fill="#7db8f5" fill-opacity=".85"/></svg>
+      Lumo<em>Pay</em>
+    </a>
+    <nav class="tnav" aria-label="Dashboard">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="activity.html">Finances</a>
+      <a href="send.html">Send and Request</a>
+      <a href="dashboard.html#deals">Deals</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="activity.html">Activity</a>
+      <a href="index.html#help">Help</a>
+    </nav>
+    <div class="tright"><a class="exit" href="index.html">LOG OUT</a></div>
+  </div>
+</header>
+
+<main class="page">
+  <section class="card" aria-label="All activity">
+    <div class="row-head"><h2>Activity</h2><button class="kebab" aria-label="Activity options">&#8942;</button></div>
+    <p class="bal-sub" style="margin-top:6px">Balance <b style="color:var(--ink)" data-balance>$1,248.60</b></p>
+    <ul class="act">
+      <li><span class="act-ic" style="background:#e6d7f7"></span><span><b>Marlow Studio Store</b><small>May 29 &middot; Refund</small></span><span class="amt in">+ $1.99</span></li>
+      <li><span class="act-ic" style="background:#ffd7a8"></span><span><b>Amara Osei</b><small>May 28 &middot; Payment received</small></span><span class="amt in">+ $60.00</span></li>
+      <li><span class="act-ic" style="background:#bcd8f7"></span><span><b>City Grocers</b><small>May 27 &middot; Card payment</small></span><span class="amt">&minus; $34.20</span></li>
+      <li><span class="act-ic" style="background:#cfecd9"></span><span><b>Savings pot</b><small>May 27 &middot; Round-up saved</small></span><span class="amt in">+ $0.80</span></li>
+      <li><span class="act-ic" style="background:#f9d7e0"></span><span><b>Northwind Coffee</b><small>May 25 &middot; Card payment</small></span><span class="amt">&minus; $6.40</span></li>
+      <li><span class="act-ic" style="background:#d7ecf9"></span><span><b>Danish Ali</b><small>May 24 &middot; Payment sent</small></span><span class="amt">&minus; $18.50</span></li>
+      <li><span class="act-ic" style="background:#e8e4da"></span><span><b>Metro Transit</b><small>May 23 &middot; Card payment</small></span><span class="amt">&minus; $2.75</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="dash">LumoPay is a fictional brand created as a design study. It is not a bank, does not hold money, and is not affiliated with PayPal, Inc. All balances and transactions are invented samples.</footer>
+<script src="dash.js"></script>
+</body>
+</html>

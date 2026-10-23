@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send and Request — LumoPay</title>
+<meta name="description" content="LumoPay send and request. Fictional wallet, sample data only.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="dash.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="tbrand" href="dashboard.html" aria-label="LumoPay dashboard">
+      <svg width="30" height="23" viewBox="0 0 34 26" aria-hidden="true"><circle cx="12" cy="13" r="10" fill="#ffffff"/><circle cx="23" cy="13" r="10" fill="#7db8f5" fill-opacity=".85"/></svg>
+      Lumo<em>Pay</em>
+    </a>
+    <nav class="tnav" aria-label="Dashboard">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="activity.html">Finances</a>
+      <a href="send.html">Send and Request</a>
+      <a href="dashboard.html#deals">Deals</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="activity.html">Activity</a>
+      <a href="index.html#help">Help</a>
+    </nav>
+    <div class="tright"><a class="exit" href="index.html">LOG OUT</a></div>
+  </div>
+</header>
+
+<main class="page">
+  <section class="card" aria-label="Send and request" style="max-width:640px">
+    <div class="row-head"><h2>Send and Request</h2></div>
+    <p class="bal-sub" style="margin-top:6px">Balance available: <b style="color:var(--ink)" data-balance>$1,248.60</b></p>
+    <div class="ok" id="send-ok" hidden></div>
+    <form id="send-form">
+      <div class="field"><label for="send-to">Send to</label><input id="send-to" type="text" placeholder="Name or email" autocomplete="off" required></div>
+      <div class="field"><label for="send-amount">Amount (USD)</label><input id="send-amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div>
+      <div class="field"><label for="send-note">Note (optional)</label><input id="send-note" type="text" placeholder="What is it for?" autocomplete="off"></div>
+      <button class="pill-btn" type="submit">Send payment</button>
+    </form>
+    <p class="note">This form runs entirely in your browser. It stores nothing and sends nothing.</p>
+  </section>
+</main>
+
+<footer class="dash">LumoPay is a fictional brand created as a design study. It is not a bank, does not hold money, and is not affiliated with PayPal, Inc. All balances and transactions are invented samples.</footer>
+<script src="dash.js"></script>
+</body>
+</html>

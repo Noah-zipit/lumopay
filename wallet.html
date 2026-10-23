@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wallet — LumoPay</title>
+<meta name="description" content="LumoPay wallet. Fictional wallet, sample data only.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="dash.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="tbrand" href="dashboard.html" aria-label="LumoPay dashboard">
+      <svg width="30" height="23" viewBox="0 0 34 26" aria-hidden="true"><circle cx="12" cy="13" r="10" fill="#ffffff"/><circle cx="23" cy="13" r="10" fill="#7db8f5" fill-opacity=".85"/></svg>
+      Lumo<em>Pay</em>
+    </a>
+    <nav class="tnav" aria-label="Dashboard">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="activity.html">Finances</a>
+      <a href="send.html">Send and Request</a>
+      <a href="dashboard.html#deals">Deals</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="activity.html">Activity</a>
+      <a href="index.html#help">Help</a>
+    </nav>
+    <div class="tright"><a class="exit" href="index.html">LOG OUT</a></div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="grid">
+    <div class="col">
+      <section class="card" aria-label="Wallet balance">
+        <div class="row-head"><h2>Wallet</h2><button class="kebab" aria-label="Wallet options">&#8942;</button></div>
+        <p class="bal-amt" data-balance>$1,248.60</p>
+        <p class="bal-sub">LumoPay balance &middot; Available</p>
+        <button class="pill-btn" type="button">Transfer Money</button>
+      </section>
+      <section class="card" aria-label="Savings pot">
+        <div class="row-head"><h2>Savings pot</h2></div>
+        <p class="bal-amt" style="font-size:30px">$212.45</p>
+        <p class="bal-sub">Holiday pot &middot; Round-ups on</p>
+      </section>
+    </div>
+    <div class="col">
+      <section class="side" aria-label="Banks and cards">
+        <div class="row-head"><h2>Banks and cards</h2><button class="kebab" aria-label="Banks and cards options">&#8942;</button></div>
+        <div class="bank-row"><span class="bank-ic"></span><span><b>RIVERSIDE CREDIT UNION</b><small>Checking &bull;&bull;&bull;&bull;4021</small></span></div>
+        <div class="bank-row"><span class="bank-ic"></span><span><b>Lumo Card Platinum Rewards</b><small>Debit &bull;&bull;&bull;&bull;4021</small></span></div>
+        <div class="bank-row"><span class="bank-ic"></span><span><b>LumoPay Debit Card</b><small>Spends from balance &middot; Sample card</small></span></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="dash">LumoPay is a fictional brand created as a design study. It is not a bank, does not hold money, and is not affiliated with PayPal, Inc. All balances and transactions are invented samples.</footer>
+<script src="dash.js"></script>
+</body>
+</html>

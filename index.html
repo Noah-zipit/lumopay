@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LumoPay — Send, spend and save in one wallet</title>
+<meta name="description" content="LumoPay is a fictional wallet design study. Send money, spend online and in stores, and set savings aside in one place.">
+<link rel="canonical" href="https://lumopay.vercel.app/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="LumoPay — one wallet for everyday money">
+<meta property="og:description" content="Send, spend and save in one place. A fictional wallet design study.">
+<style>
+:root{
+  --navy:#001435; --blue:#0070e0; --deep:#003087; --pale:#eef4fb; --mist:#f5f7fa;
+  --ink:#0b1f3a; --mut:#4a6076; --line:#d7e0ea; --gold:#f2b705; --radius:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--deep);text-decoration:none}
+img,svg{display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 28px;border-radius:999px;font-weight:700;font-size:16px;border:2px solid transparent;cursor:pointer;transition:background .18s ease,color .18s ease}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--deep)}
+.btn-ghost{background:#fff;border-color:var(--deep);color:var(--deep)}
+.btn-ghost:hover{background:var(--pale)}
+.btn-white{background:#fff;color:var(--navy)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* Header — white bar, mark left, centred nav, one action right. No login. */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:28px;min-height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.brand em{font-style:normal;color:var(--blue)}
+nav.main{display:flex;gap:6px;margin:0 auto}
+nav.main a{color:var(--navy);font-weight:600;font-size:15px;padding:10px 14px;border-radius:999px}
+nav.main a:hover{background:var(--mist)}
+.bar .btn{min-height:44px;padding:9px 22px}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer}
+.burger span{display:block;height:3px;background:var(--navy);margin:6px 8px;border-radius:2px}
+
+/* Hero — pale field, product in action */
+.hero{background:var(--pale);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center;padding:72px 0 84px}
+.eyebrow{font-size:14px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);margin-bottom:18px}
+h1{font-size:60px;line-height:1.04;letter-spacing:-.03em;color:var(--navy);font-weight:800}
+.hero p.lede{font-size:20px;color:var(--mut);margin:22px 0 30px;max-width:30ch}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.hero-note{font-size:13px;color:var(--mut);margin-top:16px}
+.stage{position:relative;display:flex;justify-content:center}
+.phone{width:300px;height:600px;background:#fff;border-radius:44px;border:10px solid var(--navy);box-shadow:0 30px 60px rgba(0,20,53,.18);padding:22px 18px;will-change:transform}
+.phone .notch{width:110px;height:22px;background:var(--navy);border-radius:999px;margin:0 auto 18px}
+.p-brand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--navy);font-size:17px}
+.p-brand em{font-style:normal;color:var(--blue)}
+.p-bal{margin:20px 0 4px;font-size:13px;color:var(--mut)}
+.p-amt{font-size:36px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.p-actions{display:flex;gap:10px;margin:18px 0 8px}
+.p-actions span{flex:1;text-align:center;background:var(--blue);color:#fff;font-weight:700;font-size:14px;padding:11px 0;border-radius:999px}
+.p-actions span.alt{background:var(--pale);color:var(--deep)}
+.p-list{list-style:none;margin-top:12px}
+.p-list li{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--line)}
+.p-list li:last-child{border-bottom:0}
+.avatar{width:38px;height:38px;border-radius:50%;flex:none}
+.p-list b{font-size:14px;color:var(--navy);display:block}
+.p-list small{font-size:12px;color:var(--mut)}
+.p-list .amt{margin-left:auto;font-weight:700;font-size:14px;color:var(--navy)}
+.p-list .amt.in{color:#087443}
+.card-mini{position:absolute;left:0;bottom:8px;width:230px;height:140px;border-radius:18px;background:var(--deep);color:#fff;padding:18px;box-shadow:0 22px 40px rgba(0,20,53,.28);transform:rotate(-7deg)}
+.card-mini .cm-brand{font-weight:800;font-size:16px}
+.card-mini .cm-num{margin-top:34px;font-size:15px;letter-spacing:.14em}
+.card-mini .cm-name{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-top:4px}
+
+/* Category strip */
+.strip{padding:34px 0;border-bottom:1px solid var(--line)}
+.strip p{font-size:14px;font-weight:700;color:var(--mut);text-align:center;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;list-style:none}
+.chips li{border:1px solid var(--line);border-radius:999px;padding:9px 18px;font-weight:600;font-size:14px;color:var(--navy);background:#fff}
+
+/* Tabs — pay / send / save */
+.tabs-sec{padding:84px 0}
+h2{font-size:40px;line-height:1.12;letter-spacing:-.025em;color:var(--navy);font-weight:800}
+.tabs{display:flex;gap:10px;margin:30px 0 36px;flex-wrap:wrap}
+.tab{border:2px solid var(--line);background:#fff;border-radius:999px;min-height:48px;padding:10px 26px;font-size:16px;font-weight:700;color:var(--navy);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.panel[hidden]{display:none}
+.panel p{font-size:18px;color:var(--mut);margin:16px 0 24px;max-width:44ch}
+.panel h3{font-size:30px;color:var(--navy);letter-spacing:-.02em;line-height:1.15}
+.visual{border-radius:var(--radius);background:var(--mist);padding:30px;min-height:280px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.visual .row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.visual .row b{color:var(--navy)}
+.visual .row .tag{font-size:12px;font-weight:800;letter-spacing:.08em;color:#087443;text-transform:uppercase}
+
+/* Dark security band */
+.dark{background:var(--navy);color:#fff;padding:84px 0}
+.dark h2{color:#fff}
+.dark p{color:#c4d3e4;font-size:18px;max-width:52ch;margin-top:16px}
+.dark-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:start}
+.facts{list-style:none;display:grid;gap:14px}
+.facts li{background:#0a2a52;border:1px solid #1d4470;border-radius:16px;padding:18px 20px}
+.facts b{display:block;font-size:16px;margin-bottom:4px}
+.facts span{color:#c4d3e4;font-size:14px}
+
+/* Card section */
+.card-sec{padding:84px 0;background:var(--mist)}
+.card-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:48px;align-items:center}
+.big-card{width:100%;max-width:480px;aspect-ratio:1.586;border-radius:24px;background:var(--deep);color:#fff;padding:30px;box-shadow:0 30px 55px rgba(0,20,53,.25);margin:0 auto}
+.big-card .cm-brand{font-size:22px;font-weight:800}
+.big-card .chip{width:52px;height:38px;border-radius:8px;background:var(--gold);margin:38px 0 22px}
+.big-card .cm-num{font-size:21px;letter-spacing:.16em}
+.big-card .cm-row{display:flex;justify-content:space-between;margin-top:26px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.card-copy p{font-size:18px;color:var(--mut);margin:16px 0 26px;max-width:46ch}
+
+/* Business split */
+.biz{padding:84px 0}
+.biz-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.biz p{font-size:18px;color:var(--mut);margin:16px 0 26px;max-width:46ch}
+.invoice{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:0 18px 40px rgba(0,20,53,.08)}
+.invoice h4{font-size:15px;color:var(--mut);font-weight:700}
+.invoice .inv-amt{font-size:34px;font-weight:800;color:var(--navy);margin:8px 0 16px}
+.invoice .row{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+.invoice .row b{color:var(--navy)}
+.paid{display:inline-block;background:#e6f4ec;color:#087443;font-weight:800;font-size:12px;letter-spacing:.08em;padding:5px 12px;border-radius:999px;text-transform:uppercase}
+
+/* Final CTA */
+.final{background:var(--deep);color:#fff;text-align:center;padding:88px 0}
+.final h2{color:#fff;max-width:22ch;margin:0 auto 18px}
+.final p{color:#c9dcf2;font-size:18px;margin-bottom:30px}
+
+/* Footer */
+footer{background:#fff;border-top:1px solid var(--line);padding:56px 0 40px}
+.f-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-bottom:36px}
+.f-grid h5{font-size:14px;color:var(--navy);margin-bottom:12px}
+.f-grid ul{list-style:none;display:grid;gap:8px}
+.f-grid a{color:var(--mut);font-size:14px}
+.legal{font-size:12.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:22px;display:grid;gap:10px}
+
+@media (max-width:900px){
+  nav.main{display:none}
+  .burger{display:block;margin-left:auto}
+  .bar .btn{display:none}
+  .hero-grid,.panel,.dark-grid,.card-grid,.biz-grid{grid-template-columns:1fr}
+  h1{font-size:42px}
+  h2{font-size:32px}
+  .hero-grid{padding:48px 0 60px}
+  .card-mini{display:none}
+  .f-grid{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .phone{transform:none !important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="LumoPay home">
+      <svg width="34" height="26" viewBox="0 0 34 26" aria-hidden="true"><circle cx="12" cy="13" r="10" fill="#0070e0"/><circle cx="23" cy="13" r="10" fill="#003087" fill-opacity=".82"/></svg>
+      Lumo<em>Pay</em>
+    </a>
+    <nav class="main" aria-label="Main">
+      <a href="#personal">Personal</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="#business">Business</a>
+      <a href="#card">Card</a>
+      <a href="#security">Security</a>
+      <a href="#help">Help</a>
+    </nav>
+    <button class="burger" aria-label="Open menu" onclick="document.getElementById('mnav').style.display=document.getElementById('mnav').style.display==='block'?'none':'block'"><span></span><span></span><span></span></button>
+    <a class="btn btn-blue" href="#get-started">Open an account</a>
+  </div>
+  <nav id="mnav" aria-label="Mobile" style="display:none;border-top:1px solid var(--line);padding:10px 24px 16px">
+    <a href="#personal" style="display:block;padding:10px 0;font-weight:600;color:var(--navy)">Personal</a>
+    <a href="#business" style="display:block;padding:10px 0;font-weight:600;color:var(--navy)">Business</a>
+    <a href="#card" style="display:block;padding:10px 0;font-weight:600;color:var(--navy)">Card</a>
+    <a href="#security" style="display:block;padding:10px 0;font-weight:600;color:var(--navy)">Security</a>
+    <a href="#get-started" style="display:block;padding:10px 0;font-weight:700;color:var(--deep)">Open an account</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">One wallet, everyday money</p>
+        <h1>Send, spend and save in one place.</h1>
+        <p class="lede">Pay friends back in seconds, check out without typing card numbers, and keep a savings pot growing in the background.</p>
+        <div class="cta-row">
+          <a class="btn btn-blue" href="#get-started">Open a free account</a>
+          <a class="btn btn-ghost" href="#personal">See how it works</a>
+        </div>
+        <p class="hero-note">Free to open. No monthly fee for personal accounts.</p>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="phone" id="phone">
+          <div class="notch"></div>
+          <div class="p-brand"><svg width="26" height="20" viewBox="0 0 34 26"><circle cx="12" cy="13" r="10" fill="#0070e0"/><circle cx="23" cy="13" r="10" fill="#003087" fill-opacity=".82"/></svg>Lumo<em>Pay</em></div>
+          <p class="p-bal">Balance</p>
+          <p class="p-amt">$1,248.60</p>
+          <div class="p-actions"><span>Send</span><span class="alt">Request</span></div>
+          <ul class="p-list" id="plist">
+            <li><span class="avatar" style="background:#ffd7a8"></span><span><b>Amara Osei</b><small>Payment received</small></span><span class="amt in">+$60.00</span></li>
+            <li><span class="avatar" style="background:#bcd8f7"></span><span><b>City Grocers</b><small>Card payment</small></span><span class="amt">-$34.20</span></li>
+            <li><span class="avatar" style="background:#cfecd9"></span><span><b>Savings pot</b><small>Round-up saved</small></span><span class="amt in">+$0.80</span></li>
+          </ul>
+        </div>
+        <div class="card-mini">
+          <p class="cm-brand">LumoPay</p>
+          <p class="cm-num">•••• 4021</p>
+          <p class="cm-name">Sample card</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category strip -->
+  <section class="strip" aria-label="Ways to pay">
+    <div class="wrap">
+      <p>Use your balance wherever the day takes you</p>
+      <ul class="chips">
+        <li>Groceries</li><li>Restaurants</li><li>Travel</li><li>Fuel</li><li>Apparel</li><li>Tickets</li><li>Rides</li><li>Online checkout</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <section class="tabs-sec" id="personal">
+    <div class="wrap">
+      <h2>Three jobs, one wallet.</h2>
+      <div class="tabs" role="tablist" aria-label="Wallet features">
+        <button class="tab" role="tab" aria-selected="true" data-tab="pay">Pay smarter</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="send">Send smarter</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="save">Save smarter</button>
+      </div>
+
+      <div class="panel" data-panel="pay">
+        <div>
+          <h3>Check out without the card-number typing.</h3>
+          <p>Your payment details stay inside the wallet. At checkout you confirm once, and the shop never sees your full card number.</p>
+          <a class="btn btn-blue" href="#card">Meet the card</a>
+        </div>
+        <div class="visual" aria-hidden="true">
+          <div class="row"><b>Northwind Store</b><span>$86.40</span></div>
+          <div class="row"><span>Paying with balance</span><span class="tag">Confirmed</span></div>
+          <div class="row"><span>Card details shared with shop</span><b>None</b></div>
+        </div>
+      </div>
+
+      <div class="panel" data-panel="send" hidden>
+        <div>
+          <h3>Money to a friend before the chat goes cold.</h3>
+          <p>Pick a name, type an amount, done. Transfers between LumoPay wallets land instantly, day or night, with no fee for personal sends.</p>
+          <a class="btn btn-blue" href="#get-started">Try sending</a>
+        </div>
+        <div class="visual" aria-hidden="true">
+          <div class="row"><b>To: Amara Osei</b><span>$60.00</span></div>
+          <div class="row"><span>Arrives</span><span class="tag">Instantly</span></div>
+          <div class="row"><span>Fee</span><b>$0.00</b></div>
+        </div>
+      </div>
+
+      <div class="panel" data-panel="save" hidden>
+        <div>
+          <h3>A savings pot that fills itself.</h3>
+          <p>Round every card spend up to the nearest dollar and the spare change moves to your pot. Small amounts, no willpower required.</p>
+          <a class="btn btn-blue" href="#get-started">Start a pot</a>
+        </div>
+        <div class="visual" aria-hidden="true">
+          <div class="row"><b>Holiday pot</b><span>$212.45</span></div>
+          <div class="row"><span>Saved this month</span><span class="tag">+$38.10</span></div>
+          <div class="row"><span>Round-ups on</span><b>Yes</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security -->
+  <section class="dark" id="security">
+    <div class="wrap dark-grid">
+      <div>
+        <h2>Built to keep money and data apart.</h2>
+        <p>Shops get a payment confirmation, not your financial details. Every transaction is encrypted in transit and watched around the clock.</p>
+      </div>
+      <ul class="facts">
+        <li><b>Encrypted by default</b><span>Payment data is encrypted end to end, on every transaction.</span></li>
+        <li><b>Fraud monitoring, 24/7</b><span>Unusual activity is flagged and paused before it completes.</span></li>
+        <li><b>Purchase cover</b><span>Eligible orders that never arrive are refunded through resolution support.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Card -->
+  <section class="card-sec" id="card">
+    <div class="wrap card-grid">
+      <div class="big-card" aria-label="Illustration of a sample LumoPay debit card">
+        <p class="cm-brand">LumoPay</p>
+        <div class="chip" aria-hidden="true"></div>
+        <p class="cm-num">5312 •••• •••• 4021</p>
+        <div class="cm-row"><span>Sample Holder</span><span>Debit</span></div>
+      </div>
+      <div class="card-copy">
+        <h2>One card, tied to your balance.</h2>
+        <p>Spend your wallet balance in stores and online, anywhere debit cards are accepted. Tap to pay, watch it appear in your activity instantly, and freeze the card from the app if it ever goes missing.</p>
+        <a class="btn btn-blue" href="#get-started">Get the card</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business -->
+  <section class="biz" id="business">
+    <div class="wrap biz-grid">
+      <div>
+        <h2>Get paid the way customers already pay.</h2>
+        <p>Send an invoice, share a payment link, or take tap-to-pay at the counter. Funds land in your business wallet, ready to spend or withdraw.</p>
+        <a class="btn btn-blue" href="#get-started">Open a business account</a>
+      </div>
+      <div class="invoice" aria-hidden="true">
+        <h4>Invoice #1042 — Branding session</h4>
+        <p class="inv-amt">$450.00</p>
+        <div class="row"><span>Status</span><span class="paid">Paid</span></div>
+        <div class="row"><span>From</span><b>Studio Marlow</b></div>
+        <div class="row"><span>Transaction fee</span><b>$13.05</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final" id="get-started">
+    <div class="wrap">
+      <h2>Open your wallet in minutes.</h2>
+      <p>Free for personal use. No sign-up, and nothing is collected.</p>
+      <a class="btn btn-white" href="dashboard.html">Open the dashboard</a>
+    </div>
+  </section>
+</main>
+
+<footer id="help">
+  <div class="wrap">
+    <div class="f-grid">
+      <div><h5>Personal</h5><ul><li><a href="#personal">Pay</a></li><li><a href="#personal">Send</a></li><li><a href="#personal">Save</a></li><li><a href="#card">Debit card</a></li></ul></div>
+      <div><h5>Business</h5><ul><li><a href="#business">Invoices</a></li><li><a href="#business">Payment links</a></li><li><a href="#business">Tap to pay</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#security">Security</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div>
+      <div><h5>Help</h5><ul><li><a href="#help">Support centre</a></li><li><a href="#help">Fees</a></li><li><a href="#help">Contact</a></li></ul></div>
+    </div>
+    <div class="legal">
+      <p>LumoPay is a fictional brand created as a design study. It is not a bank, does not hold money, and is not affiliated with PayPal, Inc. All names, balances and transactions shown are invented samples.</p>
+      <p>© 2026 LumoPay Studio.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Tabs
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected','false')});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.hidden = p.dataset.panel !== t.dataset.tab});
+  });
+});
+// Signature scroll moment: phone lifts and tilts as the hero scrolls away.
+(function(){
+  var phone = document.getElementById('phone');
+  if(!phone || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ticking = false;
+  function update(){
+    ticking = false;
+    var y = Math.min(window.scrollY, 420);
+    var p = y / 420;
+    phone.style.transform = 'translateY(' + (-26 * p) + 'px) rotate(' + (2.2 * p) + 'deg)';
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(update); }
+  }, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
